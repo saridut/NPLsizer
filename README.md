@@ -9,7 +9,7 @@ along with the following Python packages.
 - [numpy (1.24)](https://numpy.org/)
 - [scipy (1.9)](https://scipy.org/)
 - [pillow (10.1)](https://python-pillow.org/)
-- [PyQt (5.15)](https://pypi.org/project/PyQt5/)
+- [QtPy (2.4)](https://pypi.org/project/QtPy/)
 - [magicgui (0.8)](https://pyapp-kit.github.io/magicgui/)
 - [napari (0.4)](https://napari.org/stable/)
 - [opencv (4.8)](https://opencv.org/)
