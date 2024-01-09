@@ -96,8 +96,14 @@ def detect_overlap(image: Image,
 
 
 
-@magicgui(call_button='Run')
-def segment(labels: Labels) -> LayerDataTuple:
+@magicgui(call_button='Run',
+          name={'label': 'Output shapes layer name'}
+          )
+def segment(labels: Labels,
+            edge_color: str='lime',
+            edge_width: float=2.0,
+            name='NplBndry'
+            ) -> LayerDataTuple:
     """
     Performs segmentation using watershed algorithm.
 
@@ -105,11 +111,18 @@ def segment(labels: Labels) -> LayerDataTuple:
     ----------
     labels : napari.layers.Labels
         Labels layer.
+    edge_color : str
+        Can be any color name recognized by VisPy or hex value (in lower case) 
+        if starting with #.
+    edge_width : float
+        Thickness of lines and edges.
+    name : str
+        Name of the output shapes layer
 
     Returns
     -------
     napari.layers.Shapes
-        A shapes layer named `NplBndry`.
+        A shapes layer.
 
     """
 
@@ -142,12 +155,12 @@ def segment(labels: Labels) -> LayerDataTuple:
             shapes_data.append(rect_verts)
             img[:,:] = 0
 
-    return (shapes_data, {'name':'NplBndry', 'shape_type': 'rectangle',
-                          'edge_width': 2.0, 'edge_color': 'lime', 
+    return (shapes_data, {'name': name, 'shape_type': 'rectangle',
+                          'edge_width': edge_width, 'edge_color': edge_color, 
                           'face_color': [0]*4}, 'shapes')
 
 
 
-segmentation_widgets = [(detect_overlap, 'Detect overlap'),
+segmentation_widgets = [(detect_overlap, 'Label'),
                         (segment, 'Segment')
                        ]

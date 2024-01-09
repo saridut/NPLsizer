@@ -203,6 +203,6 @@ def fill_holes(image: Image,
 
 
 morph_op_widgets = [(morph_op, 'Morphology Operation'),
-                    (remove_objects, 'Remove objects'),
-                    (fill_holes, 'Fill holes')
+                    (remove_objects, 'Remove Objects'),
+                    (fill_holes, 'Fill Holes')
                    ]

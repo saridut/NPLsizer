@@ -23,7 +23,7 @@ def threshold(image: Image,
     Performs thresholding using Otsu's method.
     Wraps ``cv::threshold()`` from OpenCV. 
 
-    See https://docs.opencv.org/4.8.0/d7/d1b/group__imgproc__misc.html#gaa9e58d2860d4afa658ef70a9b1115576
+    See https://docs.opencv.org/4.8.0/d7/d1b/group__imgproc__misc.html#gae8a4a146d1ca78c626a53577199e9c57
 
     Parameters
     ----------
@@ -68,7 +68,7 @@ def adaptive_threshold(image: Image,
     Performs thresholding using an adaptive method.
     Wraps ``cv::adaptiveThreshold()`` from OpenCV. 
 
-    See https://docs.opencv.org/4.8.0/d7/d1b/group__imgproc__misc.html#gaa9e58d2860d4afa658ef70a9b1115576
+    See https://docs.opencv.org/4.8.0/d7/d1b/group__imgproc__misc.html#ga72b913f352e4a1b1b397736707afcde3
 
     Parameters
     ----------
