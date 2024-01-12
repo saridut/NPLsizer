@@ -73,16 +73,17 @@ def read_image(fn: pathlib.Path,
     if not name:
         name = basename
 
+    global PXSIZE, PXUNIT
     if ft == 'npy':
         img = np.load(fn)
         if np.issubdtype(img.dtype, np.floating):
             img = ski.exposure.rescale_intensity(img)
         if np.issubdtype(img.dtype, np.integer):
             img = ski.exposure.rescale_intensity(img, out_range=np.float64)
+        PXSIZE = 1.0; PXUNIT = 'px'
     elif ft == 'dm3':
         img_dm3 = dm3.DM3(fn)
         img = ski.exposure.rescale_intensity(img_dm3.imagedata, out_range=np.float64)
-        global PXSIZE, PXUNIT
         PXSIZE = img_dm3.pxsize[0]
         PXUNIT = img_dm3.pxsize[1].decode()
         if write_dm3_metadata:
@@ -101,6 +102,7 @@ def read_image(fn: pathlib.Path,
                     fh.write('%s : %s\n'%(key, val))
     else :
         img = ski.io.imread(fn, as_gray=True)
+        PXSIZE = 1.0; PXUNIT = 'px'
     assert img.ndim == 2 
     return (img, {'name': name, 'colormap': 'gray', 
                   'interpolation2d': 'spline36'}, 'image')
