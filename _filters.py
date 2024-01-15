@@ -59,8 +59,8 @@ def filter_mean(image: Image,
     img_dst = cv2.blur(img, (kernel_width, kernel_height))
     img_dst = ski.util.img_as_float64(img_dst)
     return (img_dst, 
-            {'name': name, 'colormap': 'gray', 'interpolation2d': 'spline36'},
-            'image')
+            {'name': name, 'metadata': image.metadata, 'colormap': 'gray',
+             'interpolation2d': 'spline36'}, 'image')
 
 
 
@@ -99,7 +99,8 @@ def filter_median(image: Image,
     img_dst = cv2.medianBlur(img, ksize)
     img_dst = ski.util.img_as_float64(img_dst)
     return (img_dst, 
-            {'name': name, 'colormap': 'gray', 'interpolation2d': 'spline36'},
+            {'name': name, 'metadata': image.metadata,
+             'colormap': 'gray', 'interpolation2d': 'spline36'},
             'image')
 
 
@@ -162,8 +163,9 @@ def filter_gaussian(image: Image,
                                img_dst, sigma_y)
     img_dst = ski.util.img_as_float64(img_dst)
     return (img_dst, 
-            {'name': name, 'colormap': 'gray', 'interpolation2d': 'spline36'},
-            'image')
+            {'name': name, 'metadata': image.metadata,
+             'colormap': 'gray', 'interpolation2d': 'spline36'},
+             'image')
 
 
 
@@ -209,8 +211,9 @@ def denoise_tv_bregman(image: Image,
                 max_num_iter=max_num_iter, eps=eps)
     img_dn = ski.util.img_as_float64(img_dn)
     return (img_dn, 
-            {'name': name, 'colormap': 'gray', 'interpolation2d': 'spline36'},
-            'image')
+            {'name': name, 'metadata': image.metadata,
+             'colormap': 'gray', 'interpolation2d': 'spline36'},
+             'image')
 
 
 
@@ -258,8 +261,9 @@ def denoise_tvl1(image: Image,
     cv2.denoise_TVL1([img], img_dn, lamda, niters) 
     img_dn = ski.util.img_as_float64(img_dn)
     return (img_dn, 
-            {'name': name, 'colormap': 'gray', 'interpolation2d': 'spline36'},
-            'image')
+            {'name': name, 'metadata': image.metadata,
+             'colormap': 'gray', 'interpolation2d': 'spline36'},
+             'image')
 
 
 
@@ -312,8 +316,9 @@ def denoise_nl_means(image: Image,
                                       search_window_size)
     img_dn = ski.util.img_as_float64(img_dn)
     return (img_dn, 
-            {'name': name, 'colormap': 'gray', 'interpolation2d': 'spline36'},
-            'image')
+            {'name': name, 'metadata': image.metadata,
+             'colormap': 'gray', 'interpolation2d': 'spline36'},
+             'image')
 
 
 
@@ -370,8 +375,9 @@ def denoise_bilateral(image: Image,
     img_dn = cv2.bilateralFilter(img, d, sigma_color, sigma_space)
     img_dn = ski.util.img_as_float64(img_dn)
     return (img_dn, 
-            {'name': name, 'colormap': 'gray', 'interpolation2d': 'spline36'},
-            'image')
+            {'name': name, 'metadata': image.metadata,
+             'colormap': 'gray', 'interpolation2d': 'spline36'},
+             'image')
 
 
 
@@ -411,7 +417,8 @@ def denoise_kuwahara(image: Image,
     img_dn = kuwahara(image.data, method=method, radius=radius, sigma=sigma) 
     img_dn = ski.util.img_as_float64(img_dn)
     return (img_dn, 
-            {'name': name, 'colormap': 'gray', 'interpolation2d': 'spline36'},
+            {'name': name, 'metadata': image.metadata,
+             'colormap': 'gray', 'interpolation2d': 'spline36'},
             'image')
 
 
@@ -452,7 +459,8 @@ def filter_unsharp_mask(image: Image,
     img_dst = ski.filters.unsharp_mask(image.data, radius=radius, amount=amount)
     img_dst = ski.util.img_as_float64(img_dst)
     return (img_dst, 
-            {'name': name, 'colormap': 'gray', 'interpolation2d': 'spline36'},
+            {'name': name, 'metadata': image.metadata,
+             'colormap': 'gray', 'interpolation2d': 'spline36'},
             'image')
 
 

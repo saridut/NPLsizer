@@ -92,7 +92,7 @@ def detect_overlap(image: Image,
             labels_data = cv2.drawContours(labels_data, contours, i, 1, cv2.FILLED)
         else:
             labels_data = cv2.drawContours(labels_data, contours, i, 2, cv2.FILLED)
-    return (labels_data, {'name':'Markers'}, 'labels')
+    return (labels_data, {'name':'Markers', 'metadata': image.metadata}, 'labels')
 
 
 
@@ -155,9 +155,10 @@ def segment(labels: Labels,
             shapes_data.append(rect_verts)
             img[:,:] = 0
 
-    return (shapes_data, {'name': name, 'shape_type': 'rectangle',
-                          'edge_width': edge_width, 'edge_color': edge_color, 
-                          'face_color': [0]*4}, 'shapes')
+    return (shapes_data, {'name': name, 'metadata': labels.metadata,
+                          'shape_type': 'rectangle', 'edge_width': edge_width,
+                          'edge_color': edge_color, 'face_color': [0]*4},
+                          'shapes')
 
 
 

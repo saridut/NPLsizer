@@ -45,7 +45,7 @@ def adjust_gamma(image: Image,
 
     """
     img = ski.exposure.adjust_gamma(image.data, gamma=gamma, gain=gain)
-    return (img, {'name': name, 'colormap': 'gray', 
+    return (img, {'name': name, 'metadata': image.metadata, 'colormap': 'gray',
                      'interpolation2d': 'spline36'}, 'image')
 
 
@@ -76,7 +76,7 @@ def equalize_hist(image: Image,
 
     """
     img = ski.exposure.equalize_hist(image.data, nbins=nbins)
-    return (img, {'name': name, 'colormap': 'gray', 
+    return (img, {'name': name, 'metadata': image.metadata, 'colormap': 'gray', 
                      'interpolation2d': 'spline36'}, 'image')
 
 
@@ -130,7 +130,7 @@ def equalize_histadapt(image: Image,
     ks = (m//nreg_height, n//nreg_width)
     img = ski.exposure.equalize_adapthist(image.data, kernel_size=ks, 
                                           clip_limit=clip_limit, nbins=nbins)
-    return (img, {'name': name, 'colormap': 'gray', 
+    return (img, {'name': name, 'metadata': image.metadata, 'colormap': 'gray',
                      'interpolation2d': 'spline36'}, 'image')
 
 

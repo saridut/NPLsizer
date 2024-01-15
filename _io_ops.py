@@ -19,10 +19,6 @@ import napari
 import dm3_lib as dm3
 
 
-#Pixel size for dm3 files, defaults to 1.0 for all other file types.
-PXSIZE = 1.0
-#Pixel unit for dm3 files, defaults to 'px' for all other file types.
-PXUNIT = 'px'
 
 
 @magicgui(call_button='Open',
@@ -73,18 +69,26 @@ def read_image(fn: pathlib.Path,
     if not name:
         name = basename
 
-    global PXSIZE, PXUNIT
+    #Pixel size for dm3 files, defaults to 1.0 for all other file types.
+    PXSIZE = 1.0
+    #Pixel unit for dm3 files, defaults to 'px' for all other file types.
+    PXUNIT = 'px'
+    #global PXSIZE, PXUNIT
     if ft == 'npy':
         img = np.load(fn)
         if np.issubdtype(img.dtype, np.floating):
             img = ski.exposure.rescale_intensity(img)
         if np.issubdtype(img.dtype, np.integer):
             img = ski.exposure.rescale_intensity(img, out_range=np.float64)
-        PXSIZE = 1.0; PXUNIT = 'px'
+        #Pixel size: Defaults to 1.0 for non-dm3 files
+        #Pixel unit: Defaults to 'px' for non-dm3 files
+        #PXSIZE = 1.0; PXUNIT = 'px'
     elif ft == 'dm3':
         img_dm3 = dm3.DM3(fn)
         img = ski.exposure.rescale_intensity(img_dm3.imagedata, out_range=np.float64)
+        #Pixel size for dm3 files
         PXSIZE = img_dm3.pxsize[0]
+        #Pixel unit for dm3 files
         PXUNIT = img_dm3.pxsize[1].decode()
         if write_dm3_metadata:
             mdata = {'filename': img_dm3.filename,
@@ -102,9 +106,12 @@ def read_image(fn: pathlib.Path,
                     fh.write('%s : %s\n'%(key, val))
     else :
         img = ski.io.imread(fn, as_gray=True)
-        PXSIZE = 1.0; PXUNIT = 'px'
+        #Pixel size: Defaults to 1.0 for non-dm3 files
+        #Pixel unit: Defaults to 'px' for non-dm3 files
+        #PXSIZE = 1.0; PXUNIT = 'px'
     assert img.ndim == 2 
-    return (img, {'name': name, 'colormap': 'gray', 
+    metadata = {'PXSIZE': PXSIZE, 'PXUNIT': PXUNIT}
+    return (img, {'name': name, 'metadata': metadata, 'colormap': 'gray', 
                   'interpolation2d': 'spline36'}, 'image')
 
 
@@ -180,6 +187,9 @@ def calc_size(shapes: Shapes,
     None
 
     """
+    PXSIZE = shapes.metadata['PXSIZE']
+    PXUNIT = shapes.metadata['PXUNIT']
+
     #Calculate the length of the two sides of each rectangle
     #for each in shapes.data:
     nshapes = shapes.nshapes

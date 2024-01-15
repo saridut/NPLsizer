@@ -46,7 +46,8 @@ def threshold(image: Image,
     thres_val, img_threshed = cv2.threshold(img, 0, 255, thresh_type)
     img_bin = (img_threshed > 0)
     return (img_bin, 
-            {'name': name, 'colormap': 'gray', 'interpolation2d': 'nearest'},
+            {'name': name, 'metadata': image.metadata,
+             'colormap': 'gray', 'interpolation2d': 'nearest'},
             'image')
 
 
@@ -108,7 +109,8 @@ def adaptive_threshold(image: Image,
                                         block_size, const)
     img_bin = (img_threshed > 0)
     return (img_bin, 
-            {'name': name, 'colormap': 'gray', 'interpolation2d': 'nearest'},
+            {'name': name, 'metadata': image.metadata,
+             'colormap': 'gray', 'interpolation2d': 'nearest'},
             'image')
 
 

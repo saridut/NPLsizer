@@ -85,7 +85,8 @@ def morph_op(image: Image,
     img_dst = cv2.morphologyEx(img, morph_ops[operation], kernel)
     img_dst = (img_dst > 0)
     return (img_dst, 
-            {'name': name, 'colormap': 'gray', 'interpolation2d': 'nearest'},
+            {'name': name, 'metadata': image.metadata,
+             'colormap': 'gray', 'interpolation2d': 'nearest'},
             'image')
 
 
@@ -135,15 +136,14 @@ def remove_objects(image: Image,
     else:
         img = copy.deepcopy(image.data)
         if labels:
-            #print(labels.data.dtype, labels.data.shape)
             img[labels.data == 1 ] = False
         if shapes:
             for each in shapes.data:
                 rr, cc = ski.draw.polygon(each[:,0], each[:,1],
                                                 shape=image.data.shape)
                 img[rr,cc] = False
-    return (img, {'name': name, 'colormap': 'gray',
-                  'interpolation2d': 'nearest'}, 'image')
+    return (img, {'name': name, 'metadata': image.metadata,
+                  'colormap': 'gray', 'interpolation2d': 'nearest'}, 'image')
 
 
 
@@ -198,7 +198,7 @@ def fill_holes(image: Image,
                 rr, cc = ski.draw.polygon(each[:,0], each[:,1],
                                             shape=image.data.shape)
                 img[rr,cc] = True
-    return (img, {'name': name, 'colormap': 'gray',
+    return (img, {'name': name, 'metadata': image.metadata, 'colormap': 'gray',
                   'interpolation2d': 'nearest'}, 'image')
 
 
