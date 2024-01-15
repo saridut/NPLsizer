@@ -103,9 +103,7 @@ appropriate values for each field.
 
 Any image format that can be read by `scikit-image` is acceptable. In addition,
 numpy `.npy` and `.dm3` files can also be read. For `.dm3` files, you may
-save its metadata in a separate file. Note that only one `.dm3` file can be
-processed at one time, i.e., at any given time you should have only one `.dm3`
-file open in the viewer. This restriction does not apply for other file formats.
+save its metadata in a separate file. 
 
 By default, the file name is used as the name of the image layer in the viewer,
 but you can supply a different name in the field `Image layer name`. Note that
